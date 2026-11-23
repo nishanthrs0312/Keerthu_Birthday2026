@@ -1,0 +1,354 @@
+/* ==========================================================================
+   Birthday Wish Website Custom Stylesheet
+   Theme: Romantic Night Sky with Glowing Stars & Warm Gold Accents
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Interactive 3D Wax-Sealed Envelope
+   -------------------------------------------------------------------------- */
+.envelope-wrapper {
+  perspective: 1000px;
+}
+
+.envelope {
+  position: relative;
+  width: 280px;
+  height: 180px;
+  background: #c2410c;
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(220, 38, 38, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.envelope-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+  clip-path: polygon(0% 100%, 50% 45%, 100% 100%);
+  z-index: 3;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+  clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+  z-index: 4;
+  transform-origin: top;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.wax-seal {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle, #f59e0b 0%, #d97706 60%, #b45309 100%);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  z-index: 10;
+  border: 2px dashed #78350f;
+}
+
+.stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 4px 8px;
+  border: 1px dashed rgba(254, 243, 199, 0.5);
+  background: rgba(254, 243, 199, 0.15);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Polaroid Photo Cards
+   -------------------------------------------------------------------------- */
+.polaroid-card {
+  background: #ffffff;
+  padding: 12px 12px 18px 12px;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  cursor: pointer;
+  max-width: 310px;
+  width: 100%;
+}
+
+.polaroid-card::before {
+  /* Washi tape aesthetic */
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75px;
+  height: 24px;
+  background: rgba(254, 215, 170, 0.7);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+  z-index: 20;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-8px) scale(1.03) rotate(0deg) !important;
+  box-shadow: 0 22px 45px rgba(245, 185, 56, 0.2), 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 30;
+}
+
+.polaroid-img-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: #1e293b;
+}
+
+.polaroid-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.polaroid-card:hover .polaroid-img-wrapper img {
+  transform: scale(1.06);
+}
+
+/* --------------------------------------------------------------------------
+   3. Birthday Cake & Candle Flame Animations
+   -------------------------------------------------------------------------- */
+.candle-stick {
+  width: 10px;
+  height: 38px;
+  border-radius: 3px;
+  box-shadow: inset 1px 0 2px rgba(255, 255, 255, 0.4);
+}
+
+.wick {
+  width: 2px;
+  height: 8px;
+  background-color: #475569;
+}
+
+.flame {
+  width: 14px;
+  height: 24px;
+  background: radial-gradient(ellipse at bottom, #fff7ed 0%, #fef08a 25%, #f59e0b 60%, #ea580c 100%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  box-shadow: 0 0 16px #f59e0b, 0 0 30px #f97316;
+  animation: flicker 1.2s infinite alternate ease-in-out;
+  transform-origin: center bottom;
+  transition: all 0.4s ease-out;
+}
+
+.flame.extinguished {
+  opacity: 0;
+  transform: scale(0.1) translateY(-10px);
+  filter: blur(4px);
+}
+
+.smoke {
+  position: absolute;
+  top: -15px;
+  width: 6px;
+  height: 6px;
+  background: rgba(226, 232, 240, 0.7);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.smoke.active {
+  animation: rise-smoke 1.8s forwards ease-out;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-2deg); }
+  25% { transform: scale(1.08, 0.95) rotate(2deg); }
+  50% { transform: scale(0.95, 1.05) rotate(-1deg); }
+  75% { transform: scale(1.04, 0.98) rotate(3deg); }
+  100% { transform: scale(1) rotate(-1deg); }
+}
+
+@keyframes rise-smoke {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-25px) translateX(6px) scale(2.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) translateX(-10px) scale(4);
+  }
+}
+
+.frosting-drips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: radial-gradient(circle at 10px 0, #ffffff 10px, transparent 11px);
+  background-size: 20px 20px;
+  opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+   4. A Letter From My Heart - Stationery Look
+   -------------------------------------------------------------------------- */
+.letter-stationery {
+  background: #fdfbf7;
+  background-image: 
+    radial-gradient(#e5dcd3 0.75px, transparent 0.75px),
+    linear-gradient(to bottom, transparent 31px, rgba(180, 83, 9, 0.08) 32px);
+  background-size: 24px 24px, 100% 32px;
+  position: relative;
+}
+
+.letter-stationery::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+@media (max-width: 640px) {
+  .letter-stationery::before {
+    left: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive Rotating / Micro-interactions
+   -------------------------------------------------------------------------- */
+.music-spin {
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-bounce-slow {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* --------------------------------------------------------------------------
+   6. Custom Scrollbar
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070814;
+}
+::-webkit-scrollbar-thumb {
+  background: #262a56;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f5b938;
+}
+
+/* --------------------------------------------------------------------------
+   7. Rolling Marquee Photo Gallery (Endless Sideways Motion)
+   -------------------------------------------------------------------------- */
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 1.5rem 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: roll-marquee 40s linear infinite;
+  will-change: transform;
+}
+
+/* Pause rolling on hover or tap so she can look closely */
+.marquee-wrapper:hover .marquee-track,
+.marquee-wrapper:active .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes roll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-photo-card {
+  flex-shrink: 0;
+  width: 250px;
+  height: 340px;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  position: relative;
+  background: #11142e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.marquee-photo-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 45px rgba(244, 63, 94, 0.25), 0 0 25px rgba(245, 185, 56, 0.2);
+  border-color: rgba(244, 63, 94, 0.6);
+}
+
+@media (max-width: 640px) {
+  .marquee-photo-card {
+    width: 200px;
+    height: 280px;
+  }
+  .marquee-track {
+    animation-duration: 28s;
+    gap: 1rem;
+  }
+}

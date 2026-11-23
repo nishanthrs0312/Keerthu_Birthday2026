@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Happy Birthday, My Love ✨</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night: {
+              950: '#070814',
+              900: '#0d0f22',
+              850: '#12142d',
+              800: '#181b39',
+              700: '#262a56',
+            },
+            gold: {
+              300: '#ffe599',
+              400: '#fbd368',
+              500: '#f5b938',
+              600: '#d49419',
+            },
+            blush: {
+              200: '#fed7e2',
+              300: '#fbb6ce',
+              400: '#f687b3',
+              500: '#ed64a6',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            handwritten: ['"Caveat"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-night-950 text-slate-100 font-sans selection:bg-rose-500 selection:text-white antialiased overflow-x-hidden relative">
+
+  <!-- Ambient Canvas Background (Stardust & Floating Hearts) -->
+  <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Floating Audio Player Bar -->
+  <div id="audio-widget" class="fixed top-5 right-5 z-40 flex items-center gap-3 backdrop-blur-md bg-night-900/70 border border-white/10 px-4 py-2 rounded-full shadow-2xl transition-all duration-300 hover:scale-105">
+    <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-rose-500/20 text-rose-400">
+      <i data-lucide="music" class="w-4 h-4 music-spin"></i>
+    </div>
+    <div class="text-xs hidden sm:block">
+      <p class="font-medium text-slate-200" id="audio-title">Can't Help Falling in Love</p>
+      <p class="text-[10px] text-slate-400">Piano Instrumental</p>
+    </div>
+    <button id="toggle-audio-btn" class="p-1.5 hover:bg-white/10 rounded-full transition-colors text-gold-400" aria-label="Play/Pause Music">
+      <i data-lucide="play" id="audio-icon" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- Audio Element (Customizable URL or fallback to high quality piano soundtrack) -->
+  <audio id="bg-audio" loop preload="auto">
+    <!-- Replace this with your local music file (e.g. music/song.mp3) or your favorite audio URL -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- ============================================== -->
+  <!-- 1. INTERACTIVE ENVELOPE / UNWRAP SURPRISE MODAL -->
+  <!-- ============================================== -->
+  <div id="landing-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#0a0c1d] via-[#11142e] to-[#070814] px-4 transition-opacity duration-1000">
+    <div class="stars-backdrop absolute inset-0 pointer-events-none"></div>
+
+    <div class="relative max-w-md w-full text-center z-10 flex flex-col items-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs tracking-wider uppercase mb-6 font-medium animate-pulse">
+        <span>✨ A Special Delivery For You</span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-serif text-white tracking-wide mb-2 font-bold">
+        For My Favorite Person In The Universe
+      </h1>
+      <p class="text-slate-300 text-sm mb-8 font-light">
+        Someone who adores you made this little universe just for your special day.
+      </p>
+
+      <!-- 3D Wax-Sealed Envelope Card -->
+      <div id="open-envelope-trigger" onclick="openEnvelopeFallback()" class="envelope-wrapper cursor-pointer group relative transition-transform duration-300 hover:scale-105 active:scale-95" role="button" tabindex="0">
+        <div class="envelope">
+          <div class="envelope-front">
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="wax-seal flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <span class="text-xl">💌</span>
+            </div>
+            <div class="stamp">
+              <span class="text-[10px] font-bold text-amber-900/60 uppercase tracking-tighter">Love Post</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col items-center gap-1">
+          <span class="text-xs uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-2 group-hover:text-gold-300">
+            <span>Tap to Open Your Birthday Surprise</span>
+            <i data-lucide="sparkles" class="w-4 h-4 animate-spin text-gold-400"></i>
+          </span>
+          <span class="text-[11px] text-slate-400">(Turn up your volume 🎵)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Safe Opening Fallback (Guarantees envelope opens even if script.js has syntax typos) -->
+  <script>
+    function openEnvelopeFallback() {
+      const flap = document.querySelector(".envelope-flap");
+      const seal = document.querySelector(".wax-seal");
+      const overlay = document.getElementById("landing-overlay");
+      const main = document.getElementById("main-content");
+      const audio = document.getElementById("bg-audio");
+
+      if (flap) flap.style.transform = "rotateX(180deg)";
+      if (seal) seal.style.opacity = "0";
+      if (audio) { try { audio.play(); } catch(e) {} }
+      if (typeof confetti === 'function') {
+        try { confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } }); } catch(e) {}
+      }
+
+      // Explicitly trigger photo rendering on open in case of async delays
+      try { if (typeof renderGallery === 'function') renderGallery(); } catch(e) {}
+      try { if (typeof renderCuteGallery === 'function') renderCuteGallery(); } catch(e) {}
+
+      setTimeout(() => {
+        if (overlay) {
+          overlay.classList.add("opacity-0", "pointer-events-none");
+          setTimeout(() => { overlay.style.display = "none"; }, 1000);
+        }
+        if (main) {
+          main.classList.remove("opacity-0");
+          main.classList.add("opacity-100");
+        }
+      }, 600);
+    }
+  </script>
+
+  <!-- Main Website Content (Hidden initially until envelope is opened) -->
+  <main id="main-content" class="relative z-10 opacity-0 transition-opacity duration-1000 min-h-screen">
+
+    <!-- ============================================== -->
+    <!-- 2. HERO SECTION & RELATIONSHIP COUNTER -->
+    <!-- ============================================== -->
+    <section id="hero" class="relative min-h-[90vh] flex flex-col items-center justify-center px-4 py-20 text-center">
+      <!-- Glow ambient lights -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+        <!-- Floating badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-gold-300 text-xs md:text-sm tracking-widest uppercase mb-6 shadow-inner animate-bounce-slow">
+          <i data-lucide="heart" class="w-4 h-4 text-rose-400 fill-rose-400"></i>
+          <span>My excess alaghiyae</span>
+          <i data-lucide="sparkles" class="w-4 h-4 text-gold-400"></i>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-extrabold tracking-tight leading-tight md:leading-tight mb-6">
+          Happy <span class="bg-gradient-to-r from-rose-300 via-gold-300 to-rose-400 bg-clip-text text-transparent font-serif italic" id="cfg-age-text">Birthday</span>, 
+          <br>
+          <span class="relative inline-block text-white" id="cfg-her-name">
+            My Keerthuuuuuuuu 💖😘🫂
+            <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 250 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 9.5C50 2.5 180 2 248 8.5" stroke="#f5b938" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </h1>
+
+        
+
+        <!-- Live World Lighting / Relationship Counter -->
+        <div class="w-full max-w-2xl p-6 rounded-2xl backdrop-blur-xl bg-night-900/60 border border-white/10 shadow-2xl relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/10 rounded-full blur-xl group-hover:bg-rose-500/20 transition-colors"></div>
+          
+          <div class="flex items-center justify-center gap-2 mb-4">
+            <i data-lucide="clock" class="w-4 h-4 text-gold-400"></i>
+            <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold" id="counter-title">Lighting Up My World For</span>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+            <div class="p-3 sm:p-4 rounded-xl bg-white/5 border border-white/5">
+              <span id="counter-days" class="block text-2xl sm:text-4xl font-serif font-bold text-gold-300">00</span>
+              <span class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400">Days</span>
+            </div>
+            <div class="p-3 sm:p-4 rounded-xl bg-white/5 border border-white/5">
+              <span id="counter-hours" class="block text-2xl sm:text-4xl font-serif font-bold text-white">00</span>
+              <span class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400">Hours</span>
+            </div>
+            <div class="p-3 sm:p-4 rounded-xl bg-white/5 border border-white/5">
+              <span id="counter-minutes" class="block text-2xl sm:text-4xl font-serif font-bold text-white">00</span>
+              <span class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400">Mins</span>
+            </div>
+            <div class="p-3 sm:p-4 rounded-xl bg-white/5 border border-white/5">
+              <span id="counter-seconds" class="block text-2xl sm:text-4xl font-serif font-bold text-rose-400 animate-pulse">00</span>
+              <span class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400">Secs</span>
+            </div>
+          </div>
+          
+          <p class="mt-4 text-xs text-slate-400 font-handwritten text-base tracking-wide text-center">
+            ...and falling more deeply in love with you with every single heartbeat. ❤️
+          </p>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <a href="#memories" class="mt-12 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-colors">
+          <span class="text-xs tracking-widest uppercase">Scroll Down!!!</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 animate-bounce text-gold-400"></i>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 3. OUR MEMORIES (INTERACTIVE PHOTO GALLERY) -->
+    <!-- ============================================== -->
+    <section id="memories" class="py-24 px-4 sm:px-6 max-w-6xl mx-auto relative">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-400 font-semibold mb-2">
+          <i data-lucide="camera" class="w-4 h-4"></i>
+          <span>Chapter & Moments</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">
+          Our Memories
+        </h2>
+        <p class="max-w-xl mx-auto text-slate-300 text-sm md:text-base font-light">
+          Every moment spent by your side is my favorite memory. Tap any photo to unlock the story behind it.
+        </p>
+      </div>
+
+      <!-- Polaroid Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 lg:gap-8 justify-items-center" id="photo-gallery-grid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 4. REASONS I LOVE YOU (INTERACTIVE CARD DECK) -->
+    <!-- ============================================== -->
+    <section id="reasons" class="py-24 px-4 bg-gradient-to-b from-transparent via-night-900/40 to-transparent relative overflow-hidden">
+      <div class="max-w-4xl mx-auto text-center mb-12">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-rose-400 font-semibold mb-2">
+          <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+          <span>Infinite Little Things</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-3">
+          Things which I adore in you 
+        </h2>
+        
+      </div>
+
+      <!-- Card Deck Container -->
+      <div class="max-w-md mx-auto relative flex flex-col items-center">
+        <!-- The Active Interactive Card -->
+        <div id="deck-card" class="w-full min-h-[320px] rounded-3xl p-8 backdrop-blur-xl bg-night-850/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between relative transform transition-all duration-500 cursor-pointer select-none group">
+          <!-- Ambient card glow -->
+          <div class="absolute -top-10 -left-10 w-28 h-28 bg-rose-500/20 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <span class="text-xs uppercase tracking-widest text-gold-400 font-semibold" id="deck-counter">Reason 1 of 10</span>
+            <div class="flex items-center gap-1 text-rose-400">
+              <i data-lucide="heart" class="w-4 h-4 fill-rose-400"></i>
+            </div>
+          </div>
+
+          <div class="py-6 flex flex-col justify-center flex-grow">
+            <div class="text-4xl mb-3 text-gold-300 font-serif" id="deck-icon">✨</div>
+            <h3 class="text-2xl font-serif font-bold text-white mb-3" id="deck-title">Your Smile</h3>
+            <p class="text-slate-300 text-sm md:text-base leading-relaxed font-light" id="deck-description">
+              Antha smile tha dii ellam mae . Antha smile tha dii unaku alaghaeee... Athu la vilunthavan tha na.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+            <span>Tap card to flip to next ✨</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-gold-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Deck Navigation Buttons -->
+        <div class="flex items-center gap-4 mt-8">
+          <button id="deck-prev-btn" class="w-12 h-12 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-slate-200 hover:bg-white/10 hover:border-gold-400/40 transition-all active:scale-95 shadow-lg" aria-label="Previous Reason">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          
+          <button id="deck-shuffle-btn" class="px-5 py-2.5 rounded-full border border-gold-400/30 bg-gold-400/10 text-gold-300 hover:bg-gold-400/20 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-95 shadow-lg">
+            <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
+            <span>Shuffle</span>
+          </button>
+
+          <button id="deck-next-btn" class="w-12 h-12 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-slate-200 hover:bg-white/10 hover:border-gold-400/40 transition-all active:scale-95 shadow-lg" aria-label="Next Reason">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 4. THE CUTE PHOTOS GALLERY (ROLLING SIDEWAYS MARQUEE) -->
+    <!-- ============================================== -->
+    <section id="cute-gallery-section" class="py-24 relative overflow-hidden">
+      <div class="text-center mb-8 px-4 max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-pink-400 font-semibold mb-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          <span>Pure Cuteness Gallery</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-3">
+          Ennoda Ulagha alaghiaeeeee 💕
+        </h2>
+        <p class="max-w-xl mx-auto text-slate-300 text-sm md:text-base font-light mb-4">
+          My best friend,my Partner , my everything.
+        </p>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-slate-400">
+          <i data-lucide="mouse-pointer" class="w-3 h-3 text-gold-400"></i>
+          <span>Hover or tap any photo to pause & view close-up</span>
+        </span>
+      </div>
+
+      <!-- Endless Rolling Sideways Marquee -->
+      <div class="marquee-wrapper">
+        <div id="cute-photos-track" class="marquee-track">
+          <!-- Rendered dynamically by script.js with seamless loop -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 5. INTERACTIVE BIRTHDAY CAKE & WISH MAKER -->
+    <!-- ============================================== -->
+    <section id="cake-section" class="py-24 px-4 text-center relative">
+      <div class="max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-400 font-semibold mb-2">
+          <i data-lucide="cake" class="w-4 h-4"></i>
+          <span>Make A Wish</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-3">
+          Blow Out Your Candles
+        </h2>
+        <p class="text-slate-300 text-sm max-w-md mx-auto mb-12">
+          Close your eyes, whisper your secret deepest wish to the universe, and blow out the candles!
+        </p>
+
+        <!-- Interactive Animated Cake Container -->
+        <div class="relative py-8 flex flex-col items-center justify-center">
+          
+          <!-- Cake Graphic (CSS + SVG) -->
+          <div class="cake-container relative flex flex-col items-center">
+            
+            <!-- Candle Flames -->
+            <div class="flex items-end justify-center gap-6 mb-1 relative z-20" id="candles-row">
+              <!-- Candle 1 -->
+              <div class="candle flex flex-col items-center">
+                <div class="flame" id="flame-1"></div>
+                <div class="smoke" id="smoke-1"></div>
+                <div class="wick"></div>
+                <div class="candle-stick bg-gradient-to-b from-rose-200 to-rose-400"></div>
+              </div>
+              <!-- Candle 2 (Center) -->
+              <div class="candle flex flex-col items-center scale-110">
+                <div class="flame" id="flame-2"></div>
+                <div class="smoke" id="smoke-2"></div>
+                <div class="wick"></div>
+                <div class="candle-stick bg-gradient-to-b from-gold-200 to-gold-400"></div>
+              </div>
+              <!-- Candle 3 -->
+              <div class="candle flex flex-col items-center">
+                <div class="flame" id="flame-3"></div>
+                <div class="smoke" id="smoke-3"></div>
+                <div class="wick"></div>
+                <div class="candle-stick bg-gradient-to-b from-rose-200 to-rose-400"></div>
+              </div>
+            </div>
+
+            <!-- Cake Layer Top -->
+            <div class="w-44 h-16 rounded-t-2xl bg-gradient-to-r from-rose-400 via-rose-300 to-rose-400 shadow-lg relative overflow-hidden flex items-center justify-center border-t border-rose-200/40">
+              <!-- Frosting Drips -->
+              <div class="frosting-drips"></div>
+              <span class="text-xs font-serif text-white/90 italic tracking-wider">Happy Birthday</span>
+            </div>
+
+            <!-- Cake Layer Bottom -->
+            <div class="w-56 h-20 rounded-b-2xl bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 shadow-2xl relative overflow-hidden flex items-center justify-center border-b border-amber-900">
+              <!-- Decorative cream pipe -->
+              <div class="absolute inset-x-0 top-0 h-2 bg-pink-100/70"></div>
+              <div class="flex gap-2">
+                <span class="text-xs">🍓</span>
+                <span class="text-xs">✨</span>
+                <span class="text-xs">🍓</span>
+              </div>
+            </div>
+
+            <!-- Plate Stand -->
+            <div class="w-64 h-4 bg-slate-300/80 rounded-full shadow-2xl mt-1 border border-white/40"></div>
+          </div>
+
+          <!-- Action Controls: Blow Out Button + Optional Mic Feature -->
+          <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button id="blow-candles-btn" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-gold-500 text-white font-semibold shadow-[0_0_25px_rgba(244,63,94,0.4)] hover:shadow-[0_0_35px_rgba(244,63,94,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 text-sm tracking-wide">
+              <span>Blow Out Candles 💨</span>
+            </button>
+
+            <button id="mic-blow-btn" class="px-5 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold-400/30 hover:bg-white/10 text-slate-300 text-xs font-medium transition-all flex items-center gap-2" title="Blow into your microphone">
+              <i data-lucide="mic" class="w-4 h-4 text-gold-400" id="mic-icon"></i>
+              <span id="mic-btn-label">Blow with Mic</span>
+            </button>
+          </div>
+
+          <!-- Post-Wish Reveal Box -->
+          <div id="wish-granted-banner" class="hidden mt-8 p-6 rounded-2xl backdrop-blur-xl bg-gold-400/10 border border-gold-400/30 max-w-lg mx-auto animate-fade-in">
+            <div class="text-3xl mb-2">🎉🎂✨</div>
+            <h4 class="text-xl font-serif font-bold text-gold-300 mb-2">Wish Sent To The Stars!</h4>
+            <p class="text-slate-200 text-sm leading-relaxed">
+              May every dream you hold close to your heart unfold in the most breathtaking, joyful ways this year. You deserve all the happiness the universe has to offer!
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 6. A LETTER FROM MY HEART -->
+    <!-- ============================================== -->
+    <section id="letter" class="py-24 px-4 relative">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-rose-400 font-semibold mb-2">
+            <i data-lucide="feather" class="w-4 h-4"></i>
+            <span>Words Just For You</span>
+          </div>
+          <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-2">
+            A Letter From My Heart
+          </h2>
+          <p class="text-slate-300 text-sm">
+            Read whenever you need a reminder of how cherished you are.
+          </p>
+        </div>
+
+        <!-- Stationery Letter Paper -->
+        <div class="letter-stationery relative p-8 sm:p-14 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] text-slate-800 border border-amber-200/50 backdrop-blur-sm">
+          <!-- Decorative Top Header -->
+          <div class="flex items-center justify-between border-b border-amber-900/15 pb-6 mb-8">
+            <div class="font-serif italic text-amber-950 font-bold text-lg sm:text-xl">
+              My Dearest Future IAS Officer 💖
+            </div>
+            <div class="text-xs uppercase tracking-wider text-amber-800/80 font-medium font-sans" id="letter-date">
+              November 22, 2026
+            </div>
+          </div>
+
+          <!-- Letter Body with Typewriter / Gentle Fade Effect -->
+          <div class="letter-body font-cormorant text-lg sm:text-2xl leading-relaxed text-amber-950/90 space-y-6" id="letter-content">
+            <p>
+              Happy Birthday, my love.   Sila per namma life la varum bothu namma life ae konjam azhaga maaridum. Enakku andha beautiful ana change nee thaan.
+
+Unna pathi yosikkum pothu enakku first neyabakam varradhu un face mattum illa. Un kooda irundha andha kutti kutii moments dhaan and unnoda valanum nu aasai ya irukura future um tha. Nee sirikkuradhu, enna paathu vekkapaduradhu,childish aa pesuradhu, en mela kovapaduradhu idhellame enakku romba pidikkum.</p>
+            <p>
+              Unaku theriyuma nu therila sila neram namma rendu perum onnum pannama pakkathula ukkandhirundha kooda athu avalo nalla irukuUnnoda antha presence tha dii ellam mae . Un kaiya pidichittu, unna paathuttu, nee en pakkathula irukka nu feel pannale enakku oru thani happiness varum. It's unexplainable.
+            </p>
+            <p>
+             Once again happy birthday diii en azhagiaeeee!!❤️ Un life la eppovum mae nee happy aa irukanum dii . Nee eppovume ipdiyae alagha siruchutae, sandhosham aa irukkanum dii. Un kannula irukkura andha happiness naan eppovume paathutte irukkanum. Un dreams ellame nejam aagum dii. Keep smiling, keep shining, and always be the happiest version of yourself. Love you endlesslyyyyy en chellakutty!!😘❤️
+            </p>
+            
+          </div>
+
+          <!-- Signature Signoff -->
+          <div class="mt-12 pt-6 border-t border-amber-900/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm font-sans uppercase tracking-widest text-amber-900/70 font-semibold">Forever & Always,</p>
+              <p class="font-handwritten text-3xl sm:text-4xl text-amber-950 font-bold mt-1" id="letter-sender">
+                With all my love, Your Nishanth ❤️
+              </p>
+            </div>
+            
+            <div class="w-14 h-14 rounded-full border-2 border-red-800/40 bg-red-900/10 flex items-center justify-center text-red-900 shadow-inner">
+              <span class="text-2xl">💍</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/10 text-center text-slate-400 text-xs relative">
+      <div class="flex items-center justify-center gap-1.5 mb-2">
+        <span>Handcrafted with all my love for</span>
+        <span class="text-gold-300 font-semibold" id="footer-name">Keerthu</span>
+        <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline"></i>
+      </div>
+      <p class="text-[11px] text-slate-300">Happy Birthday | You Make Everyday Special ✨</p>
+    </footer>
+
+  </main>
+
+
+  <!-- ============================================== -->
+  <!-- 7. LIGHTBOX MODAL FOR MEMORIES -->
+  <!-- ============================================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4 transition-all duration-300 opacity-0">
+    <div class="relative max-w-3xl w-full bg-night-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+      <!-- Close Button -->
+      <button id="modal-close-btn" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 text-white hover:bg-black/80 flex items-center justify-center transition-colors" aria-label="Close modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Image -->
+      <div class="md:w-1/2 bg-black flex items-center justify-center max-h-[450px] overflow-hidden">
+        <img id="modal-image" src="" alt="Memory Photo" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Modal Content -->
+      <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 text-xs uppercase tracking-widest text-gold-400 font-semibold mb-2">
+            <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+            <span id="modal-date">Date</span>
+          </div>
+          <h3 id="modal-title" class="text-2xl font-serif font-bold text-white mb-3">Memory Title</h3>
+          <p id="modal-story" class="text-slate-300 text-sm leading-relaxed font-light">Memory long story and notes go here...</p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span class="font-handwritten text-lg text-rose-300">Remember this? 💕</span>
+          <div class="flex gap-2">
+            <button id="modal-prev-btn" class="p-2 hover:bg-white/10 rounded-full transition-colors" aria-label="Previous image">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+            <button id="modal-next-btn" class="p-2 hover:bg-white/10 rounded-full transition-colors" aria-label="Next image">
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File (versioned to avoid browser caching) -->
+  <script src="script.js?v=2.1"></script>
+</body>
+</html>
