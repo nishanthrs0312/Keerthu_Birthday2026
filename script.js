@@ -53,11 +53,25 @@ const BIRTHDAY_CONFIG = {
       story: "Do you remember the day where there are..... lots of kisses.... and madam was blushing sooo much .Every time I kissed you, that shy little smile of yours made my heart melt all over again"
     },
     {
+      title: "CIT Outing",
+      date: "Feb 9, 2026",
+      caption: "CIT Outing 💖",
+      image: "renew.jpg",
+      story: "Unaku neyabakam iruka dii anaiku namma rendu perum antha auto la okanthu kathai pesunathu antha cheeks aa pinch pannum pothu madam ana blushhhh irukaeeeee 🫣"
+    },
+    {
       title: "Our Real First Date",
       date: "Aug 13, 2026",
       caption: "Our Real First Date 💖",
       image: "WhatsApp Image 2026-11-22 at 12.24.31 PM.jpeg",
-      story: "Our first date just the two of us with no friends around just you and me. I still remember how happy were are on that day . Those cute romance we had ."
+      story: "Our first date just the two of us with no friends around,it was just US. I still remember how happy were are on that day . Those cute romance we had ."
+    },
+    {
+      title: "The Monochromatic Date 🤭",
+      date: "Aug 13, 2026",
+      caption: "The Monochromatic Date 🤭",
+      image: "02.jpeg",
+      story: "Our second date just the two of us with no friends around,just you and me. Anaiku semma cute aa iruntha dii with a monochromatic dress🤭.Anaiku nee scooty la thoongum pothu it felt different dii. All I saw was a kutti ponnu inside of you ."
     },
     
   ],
@@ -72,7 +86,7 @@ const BIRTHDAY_CONFIG = {
     {
       icon: "🕊️",
       title: "Kind Heart",
-      description: "Innoru vishayam enaku unkitta romba pudikum na athu unnoda manasu tha dii no matter what you give kindness without even expecting"
+      description: "Innoru vishayam enaku unkitta romba pudikum na athu unnoda manasu tha dii no matter what, you give kindness without even expecting"
     },
     {
       icon: "😂",
@@ -92,17 +106,17 @@ const BIRTHDAY_CONFIG = {
     {
       icon: "😁",
       title: "Cute Angry Face",
-      description: "Keerthana enna tha nee kovathula moraichalum seri dii enaku innum anaiku patha antha cute angry face tha dii neyabakam varum . Kovathula um epdi dii avalo cute aa iruka"
+      description: "Keerthana enna tha nee kovathula moraichalum seri dii enaku innum anaiku patha antha cute angry face tha dii neyabakam varum . Kovathula um epdi dii avalo cute aa iruka....."
     },
     {
       icon: "🤝",
       title: "Openness",
-      description: "Unaku onnu pudikala na anga nee sollura la enaku athu pudikala nu athuvum enkau unkitta pudicha vishayam"
+      description: "Unaku onnu pudikala na anga nee sollura la enaku athu pudikala nu athuvum enaku unkitta pudicha vishayam"
     },
     {
-      icon: "👀",
+      icon: "🫣",
       title: "Antha cuteness",
-      description: "Unaku normal aa irukalam dii but only  i know much cute you are nu "
+      description: "Unaku normal aa irukalam dii but only  i know much cute you are nu. Antha blush tha dii ellam mae avalooo cute aa irupa dii😘  "
     },
     {
       icon: "♾️",
@@ -191,7 +205,32 @@ const BIRTHDAY_CONFIG = {
     {
       image: "19.jpg",
       caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "20.jpeg",
+      caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "21.jpeg",
+      caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "22.jpeg",
+      caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "23.jpeg",
+      caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "24.jpeg",
+      caption: "My whole heart in one person ❤️"
+    },
+    {
+      image: "25.jpeg",
+      caption: "My whole heart in one person ❤️"
     }
+
   ]
 };
 
